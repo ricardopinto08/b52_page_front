@@ -44,6 +44,10 @@
       </a>
     </div>
 
+    <div>
+			<iframe width="900" height="700" src="https://s3-us-west-2.amazonaws.com/videosdoritos/Drake+-+In+My+Feelings.mp4" frameborder="0" allowfullscreen></iframe>
+		</div>
+
 
   </div>
 </template>
@@ -66,6 +70,6 @@ export default {
 <style lang="css">
 .nav_principal{
   height: 100px;
-  font-size: 50px;
+  font-size: 35px;
 }
 </style>
