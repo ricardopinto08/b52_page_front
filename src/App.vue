@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view/>
+    <!-- <pop-up></pop-up> -->
   </div>
 </template>
 
@@ -12,6 +13,8 @@ export default {
 
 <style>
 #app {
+  background-image: url('assets/images/background.png');
+  background-size: cover;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
