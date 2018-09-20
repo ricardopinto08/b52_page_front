@@ -50,31 +50,63 @@
     <img class="d-block w-100" src="" alt="">
 
     <div>
-			<iframe width="900" height="700" src="https://s3-us-west-2.amazonaws.com/videosdoritos/Drake+-+In+My+Feelings.mp4" frameborder="0" allowfullscreen></iframe>
-		</div>
+      <iframe width="900" height="700" src="https://s3-us-west-2.amazonaws.com/videosdoritos/Drake+-+In+My+Feelings.mp4" frameborder="0" allowfullscreen></iframe>
+    </div>
 
     <img style="height:500px;"  src="../assets/images/WEB6.png" alt="">
     <img style="width:800px"  src="../assets/images/WEB9.png" data-toggle="modal" data-target="#exampleModal">
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+
+        </div>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
     </div>
-  </div>
-</div>
+    <div>
+      <p>Agenda tu clase de cortesía:</p>
+      <input type="text"
+      placeholder="nombre"
+      name="Nombre"
+      v-validate="'required|alpha_spaces'"
+      v-model="registration.user.first_name"
+      >
+      <br>
+      <span style="color:black;" v-show="errors.has('nombre')" class="">{{ errors.first('nombre') }}</span>
+      <br>
+      <input type="text"
+      placeholder="Apellido"
+      name="apellido"
+      v-validate="'required|alpha_spaces'"
+      v-model="registration.user.last_name"
+      >
+      <br>
+      <input type="number"
+      placeholder="Teléfono"
+      v-model="registration.user.phone"
+      >
+      <br>
+      <input type="text"
+      placeholder="Correo electrónico"
+      v-model="registration.user.email"
+      >
+      <br>
+      <button @click="schedule()" name="button">Agendar</button>
+    </div>
 
 
 
@@ -90,8 +122,39 @@ $('a').click(function() {
 });
 
 export default {
+  data() {
+    return {
+      registration: {
+        user: {
+          email: '',
+          password: '123456',
+          first_name: '',
+          last_name: '',
+          phone: ''
+        }
+      },
+    }
+  },
   methods: {
-
+    schedule(){
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.registration.user.email=this.registration.user.email.toLowerCase();
+          this.$http.post('users/', this.registration, { emulateJSON: true }).then(
+            response => {
+              console.log(response);
+            },
+            error => {
+              console.log(error);
+              alert("Verifica tus datos")
+            }
+          )
+        }else{
+          console.log(this.errors);
+          alert('Llena los campos faltantes');
+        }
+      });
+    }
   }
 }
 </script>
